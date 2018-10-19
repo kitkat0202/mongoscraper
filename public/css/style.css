@@ -1,0 +1,119 @@
+nav ul a,
+nav .brand-logo {
+  color: #444;
+}
+
+.welcome {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+  margin-top: 10px;
+}
+
+p {
+  line-height: 2rem;
+}
+
+.sidenav-trigger {
+  color: #26a69a;
+}
+
+.side-menu-img {
+  height: 150px;
+}
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: rgba(255,255,255,.9);
+}
+
+.card .card-content {
+  height: 235px;
+  padding: 15px;
+}
+
+h6 {
+  margin: 0px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.card .card-content p{
+  line-height: 18px;
+  margin-bottom: 8px;
+}
+
+.sum-div {
+  height: 100px;
+  overflow: hidden; 
+}
+
+.summary {
+  text-overflow: ellipsis;
+}
+
+.byline-p {
+  font-size: 9px;
+  white-space:nowrap;
+  overflow:hidden;
+  color: #aaa;
+}
+
+.article-btn div,
+.add-note,
+.remove-save {
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.article-btn:hover,
+.add-note:hover,
+.remove-save:hover {
+  cursor: pointer;
+}
+
+.parallax-container .section {
+  width: 100%;
+}
+
+footer.page-footer {
+  padding-top: 0;
+  margin: 0;
+}
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+
+  #logo-container {
+    font-size: 20px;
+  }
+
+  #title-text {
+    font-size: 45px;
+  }
+}
+
+@media only screen and (max-width : 425px) {
+  #title-text {
+    font-size: 35px;
+  }
+
+  .btn-large {
+    height: 48px;
+    line-height: 48px;
+    padding: 0 20px;
+  }
+}

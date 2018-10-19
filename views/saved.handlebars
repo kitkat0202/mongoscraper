@@ -1,0 +1,63 @@
+  <!-- Top image -->
+  <div id="index-banner" class="parallax-container">
+    <div class="section">
+      <div class="container welcome">
+        <a href="https://www.cnet.com/news/"><h1 id="title-text" class="header center white-text">Saved Stories</h1></a>
+        <div class="row center">
+          <a id="clear-button" class="btn-large waves-effect waves-teal teal-text text-darken-1 white">Clear Site</a>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="images/yp3713551.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+      <!--   Save Section   -->
+      <div class="row saved">
+
+      {{#if save}}
+        <div class="col s12 center">
+          <h4>You currently have no saved articles</h4>
+        </div>
+      {{else}}
+        {{#each articles}}
+        <div class="col s12 m3">
+          <div class="card">
+            <div class="card-image">
+              <img src="{{image}}">
+            </div>
+            <div class="card-content">
+              <a href="{{link}}"><h6>{{title}}</h6></a>
+              <div class="sum-div">
+                <p class="summary">{{summary}}</p>
+              </div>
+              <p class="byline-p"><u>{{byline}}</p>
+            </div>
+            <div class="card-action blue-grey lighten-4" data-id="{{_id}}">
+              <a data-target="modal-note" class="add-note modal-trigger teal-text text-darken-1">Note</a>
+              <a class="remove-save red-text">Remove</a>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      {{/if}}
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Structure -->
+  <div id="modal-note" class="modal">
+    <div class="modal-content">
+      <div class="row">
+        <input placeholder="Title" id="title" type="text" class="validate col s6">
+      </div>
+      <textarea placeholder="Add your note here" id="body" class="materialize-textarea"></textarea>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" class="note-submit waves-effect waves-green btn-flat teal-text text-darken-1">Submit</a>
+      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>
+          
