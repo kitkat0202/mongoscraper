@@ -4,7 +4,7 @@
       <div class="container welcome">
         <a href="https://www.cnet.com/news/"><h1 id="title-text" class="header center white-text">Saved Stories</h1></a>
         <div class="row center">
-          <a id="clear-button" class="btn-large waves-effect waves-teal teal-text text-darken-1 white">Clear Site</a>
+          {{!-- <a id="clear-button" class="btn-large waves-effect waves-teal teal-text text-darken-1 white">Clear Site</a> --}}
         </div>
       </div>
     </div>
@@ -56,8 +56,9 @@
       <textarea placeholder="Add your note here" id="body" class="materialize-textarea"></textarea>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="note-submit waves-effect waves-green btn-flat teal-text text-darken-1">Submit</a>
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      <a class="note-delete waves-effect waves-green btn-flat red-text" style="display: none;">Delete Note</a>
+      <a class="note-submit waves-effect waves-green btn-flat teal-text text-darken-1">Submit Changes</a>
+      <a class="modal-close waves-effect waves-green btn-flat">Close</a>
     </div>
   </div>
           

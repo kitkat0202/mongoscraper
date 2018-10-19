@@ -44,31 +44,32 @@ module.exports = (app) => {
     // get notes
     app.get("/note/get/:id", (req, res) => {
         db.Article.findOne({ _id: req.params.id })
-        .populate("note")
-        .then((data) =>  res.json(data))
-        .catch((err) => res.json(err))
+            .populate("note")
+            .then((data) =>  res.json(data))
+            .catch((err) => res.json(err))
     })
 
     // create note
     app.post("/note/new/:id", (req, res) => {
         db.Note.create(req.body)
-        .then((dbNote) =>  db.Article.findOneAndUpdate({ _id: req.params.id }, {$set: { note: dbNote._id }}, { new: true }))
-        .then((data) => res.send("success"))
-        .catch((err) => res.json(err))
+            .then((dbNote) =>  db.Article.findOneAndUpdate({ _id: req.params.id }, {$set: { note: dbNote._id }}, { new: true }))
+            .then((data) => res.json(data))
+            .catch((err) => res.json(err))
     })
 
     // update note
     app.post("/note/update/:id", (req, res) => {
         db.Note.findOneAndUpdate({_id: req.params.id}, req.body , (err, data) => {
-            err ? console.log(err) : res.send("success")
+            err ? console.log(err) : res.json(data)
         })
     })
 
     // delete note
     app.get("/note/delete/:id", (req, res) => {
         db.Note.findByIdAndRemove({ _id: req.params.id })
-        .then((data) => db.Article.findOneAndUpdate({ note: req.params.id }, { $set: {note: null}}))
-        .catch((err) => res.json(err))
+            .then((data) => db.Article.findOneAndUpdate({ note: req.params.id }, { $set: {note: null}}))
+            .then((data) => res.json(data))
+            .catch((err) => res.json(err))
     })
 
     app.get("/api/scrape", (req, res) => {
@@ -107,7 +108,7 @@ module.exports = (app) => {
             var $ = cheerio.load(response.data)
 
             $(".story-menu li .story .story-body").each(function(i, element) {
-                console.log(i);
+                // console.log(i);
                 
                 let result = {}
                 result.title = $(this).children(".story-link").children(".story-meta").children("h2").text().trim()
@@ -119,7 +120,7 @@ module.exports = (app) => {
                 // console.log(result)
                 db.Article.create(result)
                     .then((data) => {
-                        console.log(data)
+                        // console.log(data)
                     })
                     .catch((err) => {
                         return res.json(err);
