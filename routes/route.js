@@ -76,7 +76,7 @@ module.exports = (app) => {
         puppeteer.launch({
             headless: true, 
             ignoreDefaultArgs: ['--disable-extensions'], 
-            executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+            // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
             args: [
                 '--auto-open-devtools-for-tabs',
                 '--disable-dev-shm-usage'
