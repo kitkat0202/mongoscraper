@@ -79,8 +79,10 @@ module.exports = (app) => {
             // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
             args: [
                 '--auto-open-devtools-for-tabs',
-                '--disable-dev-shm-usage'
-        ]})
+                '--disable-dev-shm-usage',
+                '--no-sandbox', 
+                '--disable-setuid-sandbox']
+        })
             .then(browser => browser.newPage())
             .then((page) => {
                 page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36")
