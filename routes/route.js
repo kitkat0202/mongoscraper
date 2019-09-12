@@ -1,6 +1,6 @@
 const db = require("../models")
-// var puppeteer = require("puppeteer")
-var axios = require("axios")
+var puppeteer = require("puppeteer")
+// var axios = require("axios")
 const cheerio = require('cheerio');
 
 
@@ -73,65 +73,86 @@ module.exports = (app) => {
     })
 
     app.get("/api/scrape", (req, res) => {
-        // puppeteer.launch({headless: true})
-        //     .then(browser => browser.newPage())
-        //     .then((page) => {
-        //         page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36")
-        //         return page.goto('https://www.cnet.com/news/').then(() => {
-        //             return page.waitForSelector(".fdListingContainer .fdListing .row .riverPost").then(() => {
-        //                 return page.content()
-        //             })
-        //         })
-        //     })
-        //     .then((html) => {
-        //         const $ = cheerio.load(html)
-                
-        //         $(".fdListingContainer .fdListing .row .riverPost").each(function() {
-        //             let result = {}
-        //             result.title = $(this).children(".assetText").children("h3").children("a").text().trim()
-        //             result.link = `https://www.cnet.com/${$(this).children(".assetText").children("h3").children("a").attr("href")}`
-        //             result.summary = $(this).children(".assetText").children("p").text().trim()
-        //             result.byline = $(this).children(".assetText").children(".byline").text().trim()
-
-        //             db.Article.create(result)
-        //                 .then(data => console.log(data))
-        //                 .catch(err => res.json(err))
-        //         })
-        //         res.send("success")
-
-        //     })
-        //     .catch(function(err) {
-        //         console.log(`Error: ${err}`);
-        //     })
-
-        axios.get("https://www.nytimes.com/section/technology").then(function(response) {
-            var $ = cheerio.load(response.data)
-
-            $(".story-menu li .story .story-body").each(function(i, element) {
-                // console.log(i);
-                
-                let result = {}
-                result.title = $(this).children(".story-link").children(".story-meta").children("h2").text().trim()
-                result.link = $(this).children(".story-link").attr("href")
-                result.summary = $(this).children(".story-link").children(".story-meta").children(".summary").text().trim()
-                result.byline = $(this).children(".story-link").children(".story-meta").children(".byline").text().trim()
-                result.image = $(this).children(".story-link").children(".wide-thumb").children("img").attr("src")
-
-                // console.log(result)
-                db.Article.create(result)
-                    .then((data) => {
-                        // console.log(data)
+        puppeteer.launch({
+            headless: true, 
+            ignoreDefaultArgs: ['--disable-extensions'], 
+            executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+            args: [
+                '--auto-open-devtools-for-tabs',
+                '--disable-dev-shm-usage'
+        ]})
+            .then(browser => browser.newPage())
+            .then((page) => {
+                page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36")
+                return page.goto('https://www.cnet.com/news/').then(() => {
+                    return page.waitForSelector(".fdListingContainer .fdListing .row .riverPost").then(() => {
+                        return page.content()
                     })
-                    .catch((err) => {
-                        return res.json(err);
-                    })
+                })
             })
-            return res.send("success")
-        })
-        // .catch((err) => {
-        //     console.log(`Error: ${err}`)
-        //     return res.json(err);
-        // })
+            .then((html) => {
+                const $ = cheerio.load(html)
+                
+                $(".fdListingContainer .fdListing .row .riverPost").each(function() {
+                    let result = {}
+                    let spanImage = $(this).children(".assetThumb").children("a").children("figure").children("noscript").text().trim()
+
+                    if (spanImage.includes('<span><img src="')) {
+                        spanImage = spanImage.replace('<span><img src="', '')
+                    }
+
+                    if (spanImage.includes('" class="" alt="" height="196" width="196"></span>')) {
+                        spanImage = spanImage.replace('" class="" alt="" height="196" width="196"></span>', '')
+                    }
+                    
+                    result.title = $(this).children(".assetText").children("h3").children("a").text().trim()
+                    result.image = spanImage
+                    result.link = `https://www.cnet.com/${$(this).children(".assetText").children("h3").children("a").attr("href")}`
+                    result.summary = $(this).children(".assetText").children("p").text().trim()
+                    result.byline = $(this).children(".assetText").children(".byline").text().trim()
+                    db.Article.findOne({title: result.title}).then(exist => {
+                        if (!exist) {
+                            db.Article.create(result)
+                                .then(data => console.log(data))
+                                .catch(err => console.log(`Error: ${err}`))
+                        }
+                    })
+                    
+                })
+            })
+            // .then(() => res.send("success"))
+            .catch(function(err) {
+                console.log(`Error: ${err}`);
+            })
+
+            // axios.get("https://www.nytimes.com/section/technology")
+            //     .then(function(response) {
+            //         var $ = cheerio.load(response.data)
+        
+            //         $(".story-menu li .story .story-body").each(function(i, element) {
+            //             // console.log(i);
+                        
+            //             let result = {}
+            //             result.title = $(this).children(".story-link").children(".story-meta").children("h2").text().trim()
+            //             result.link = $(this).children(".story-link").attr("href")
+            //             result.summary = $(this).children(".story-link").children(".story-meta").children(".summary").text().trim()
+            //             result.byline = $(this).children(".story-link").children(".story-meta").children(".byline").text().trim()
+            //             result.image = $(this).children(".story-link").children(".wide-thumb").children("img").attr("src")
+        
+            //             // console.log(result)
+            //             db.Article.create(result)
+            //                 .then((data) => {
+            //                     console.log(data)
+            //                 })
+            //                 .catch((err) => {
+            //                     return res.json(err);
+            //                 })
+            //         })
+            //         return res.send("success")
+            //     })
+            //     .catch((err) => {
+            //         return res.json(err);
+            //     })
 
     })
 }

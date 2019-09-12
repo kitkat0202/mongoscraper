@@ -1,47 +1,50 @@
-  <!-- Top image -->
-  <div id="index-banner" class="parallax-container">
-    <div class="section">
-      <div class="container welcome">
-        <a href="https://www.cnet.com/news/"><h1 id="title-text" class="header center white-text">New York Times Latest Stories</h1></a>
-        <div class="row center">
-          <a id="scrape-button" class="btn-large waves-effect waves-light teal lighten-1">Scrape Site</a>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="images/f3zB9nU.jpg" alt="Unsplashed background img 1"></div>
-  </div>
-
-  <div class="container">
-    <div class="section">
-      <!--   Article Section   -->
-      <div class="row articles">
-
-      {{#if page}}
-        <div class="col s12 center">
-          <h4>There are currently no articles</h4>
-        </div>
-      {{else}}
-        {{#each articles}}
-        <div class="col s12 m3">
-          <div class="card">
-            <div class="card-image">
-              <img src="{{image}}">
+    <!-- Top image -->
+    <div id="index-banner" class="parallax-container">
+        <div class="section">
+            <div class="container welcome">
+                <a href="https://www.cnet.com/news/"><h1 id="title-text" class="header center white-text">New York Times Latest Stories</h1></a>
+                <div class="row center">
+                    <a id="scrape-button" class="btn-large waves-effect waves-light teal lighten-1">Scrape Site</a>
+                </div>
             </div>
-            <div class="card-content">
-              <a href="{{link}}"><h6>{{title}}</h6></a>
-              <div class="sum-div">
-                <p class="summary">{{summary}}</p>
-              </div>
-              <p class="byline-p"><u>{{byline}}</p>
-            </div>
-            <a class="white-text article-btn" data-id="{{_id}}">
-              <div class="card-action blue-grey darken-1 center">Save</div>
-            </a>
-          </div>
         </div>
-        {{/each}}
-      {{/if}}
-
-      </div>
+        <div class="parallax"><img src="images/f3zB9nU.jpg" alt="Unsplashed background img 1"></div>
     </div>
-  </div>
+
+    <div class="container">
+        <div class="section">
+            <div id="loadbar" class="disappear">
+                <img src="./images/dash-loader-large.gif" alt="loadbar">
+            </div>
+            <!--   Article Section   -->
+            <div class="row articles">
+
+            {{#if page}}
+                <div class="col s12 center">
+                    <h4>There are currently no articles</h4>
+                </div>
+            {{else}}
+                {{#each articles}}
+                <div class="col s12 m3">
+                    <div class="card">
+                        <div class="card-image">
+                            <img src="{{image}}">
+                        </div>
+                        <div class="card-content">
+                            <a href="{{link}}"><h6>{{title}}</h6></a>
+                            <div class="sum-div">
+                                <p class="summary">{{summary}}</p>
+                            </div>
+                            <p class="byline-p"><u>{{byline}}</p>
+                        </div>
+                        <a class="white-text article-btn" data-id="{{_id}}">
+                            <div class="card-action blue-grey darken-1 center">Save</div>
+                        </a>
+                    </div>
+                </div>
+                {{/each}}
+            {{/if}}
+
+            </div>
+        </div>
+    </div>

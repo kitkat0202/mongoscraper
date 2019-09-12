@@ -1,3 +1,8 @@
+.disappear {
+  display: none;
+}
+
+
 nav ul a,
 nav .brand-logo {
   color: #444;

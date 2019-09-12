@@ -3,13 +3,11 @@ $(function(){
     /////////// Scrape btn //////////
     /////////////////////////////////
     $("#scrape-button").click(() => {
-        $.get("api/scrape").then((data) => {
-            if (data === "success") {
-                $(".articles").empty();
-                $.get("/", (data) => {
-                    location.reload()
-                })
-            }
+        $(".articles").empty()
+        $("#loadbar").removeClass("disappear")
+        $.get("api/scrape").then(() => {
+            location.reload()
+
         })
     })
 
