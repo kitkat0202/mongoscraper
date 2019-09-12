@@ -115,7 +115,7 @@ module.exports = (app) => {
                     db.Article.findOne({title: result.title}).then(exist => {
                         if (!exist) {
                             db.Article.create(result)
-                                .then(data => console.log(data))
+                                // .then(data => console.log(data))
                                 .catch(err => console.log(`Error: ${err}`))
                         }
                     })
