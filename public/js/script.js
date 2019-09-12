@@ -16,7 +16,7 @@ $(function(){
     //////////////////////////////
     $(".article-btn").click(function() {
         let id = $(this).attr("data-id")
-        let selected = $(this).parent().parent().parent()
+        let selected = $(this).parent().parent()
 
         $.get(`/articles/update/${id}`, (data) => {
             if (data === "success") {
